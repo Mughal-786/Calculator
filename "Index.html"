@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MR BOSS HAPI OFFICIAL COINS</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #000; color: #ffd700; padding: 20px; }
+        .container { border: 2px solid #ffd700; padding: 20px; border-radius: 15px; background: #111; max-width: 400px; margin: auto; box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+        h1 { font-size: 22px; text-transform: uppercase; border-bottom: 1px solid #ffd700; padding-bottom: 10px; margin-bottom: 20px; }
+        input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 8px; border: 1px solid #ffd700; background: #222; color: #fff; font-size: 18px; text-align: center; }
+        button { width: 90%; padding: 12px; background: linear-gradient(45deg, #ffd700, #ffae00); border: none; border-radius: 8px; font-weight: bold; font-size: 18px; cursor: pointer; color: #000; }
+        #result-box { margin-top: 25px; padding: 15px; border-top: 1px solid #444; }
+        .coin-text { font-size: 28px; color: #fff; display: block; margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>MR BOSS HAPI OFFICIAL COINS</h1>
+    <p>پاکستانی روپے (PKR) لکھیں</p>
+    <input type="number" id="pkrInput" placeholder="رقم یہاں لکھیں..." oninput="calculate()">
+    
+    <div id="result-box">
+        <span>آپ کے ٹوٹل کوائنز:</span>
+        <span id="coinDisplay" class="coin-text">0</span>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        let pkr = parseFloat(document.getElementById('pkrInput').value);
+        let coins = 0;
+        let display = document.getElementById('coinDisplay');
+
+        if (!pkr || pkr <= 0) {
+            display.innerText = "0";
+            return;
+        }
+
+        // آپ کی لسٹ کے عین مطابق ڈیٹا
+        const rates = {
+            280: 750000,
+            420: 1125000,
+            560: 1500000,
+            1120: 3000000,
+            1400: 3780000,
+            1680: 4530000,
+            2800: 7560000,
+            5000: 13500000,
+            6900: 19020000,
+            14000: 38100000,
+            27700: 77400000
+        };
+
+        // اگر لسٹ والی رقم ہے تو وہی دکھائے گا
+        if (rates[pkr]) {
+            coins = rates[pkr];
+        } else {
+            // اگر لسٹ سے ہٹ کر رقم ہے تو قریبی ریٹ کے حساب سے حساب کرے گا
+            let baseRate = 2794.22; 
+            coins = Math.floor(pkr * baseRate);
+        }
+
+        display.innerText = coins.toLocaleString();
+    }
+</script>
+
+</body>
+  </html>
+  
