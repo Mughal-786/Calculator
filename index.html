@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hapi Coins Calculator - Mr Boss</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 { color: #333; margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e7f3ff;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .footer-info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        .footer-info b { color: #000; }
+    </style>
+</head>
+<body>
+
+<div class="calculator-card">
+    <h2>Mr Boss Coins Calc</h2>
+    
+    <div class="input-group">
+        <label>کوائنز کی تعداد (Millions):</label>
+        <input type="number" id="coins" placeholder="مثال: 1" oninput="calculate()">
+    </div>
+
+    <div class="input-group">
+        <label>موجودہ ریٹ (PKR):</label>
+        <input type="number" id="rate" value="280" oninput="calculate()">
+    </div>
+
+    <div class="result" id="totalPrice">
+        ٹوٹل رقم: 0 PKR
+    </div>
+
+    <div class="footer-info">
+        <p><b>Owner:</b> MR BOSS</p>
+        <p><b>WhatsApp:</b> 03406603943</p>
+        <p><b>Easypaisa:</b> 03406603943</p>
+        <p><b>Meezan Bank:</b> Available</p>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        const coins = document.getElementById('coins').value;
+        const rate = document.getElementById('rate').value;
+        const resultDiv = document.getElementById('totalPrice');
+
+        if (coins && rate) {
+            const total = coins * rate;
+            resultDiv.innerHTML = "ٹوٹل رقم: " + total.toLocaleString() + " PKR";
+        } else {
+            resultDiv.innerHTML = "ٹوٹل رقم: 0 PKR";
+        }
+    }
+</script>
+
+</body>
+</html>
