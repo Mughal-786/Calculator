@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr Boss - Pro Calculator</title>
+    <style>
+        :root {
+            --bg-color: #000;
+            --card-bg: #111;
+            --main-gold: #d1b16c;
+            --text-gold: #f8e5b6;
+            --border-color: #444;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            background-color: var(--bg-color); 
+            color: white; 
+            margin: 0;
+            padding: 20px;
+        }
+
+        .main-wrapper {
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            max-width: 450px;
+            margin: 10px auto;
+            padding: 10px;
+            box-shadow: 0 0 20px rgba(209, 177, 108, 0.2);
+        }
+
+        .header { margin: 20px 0; }
+        .mr-boss-text {
+            font-size: 32px;
+            color: var(--text-gold);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .container { 
+            background: var(--card-bg); 
+            padding: 20px; 
+            border-radius: 20px; 
+            border: 1px solid var(--border-color);
+        }
+
+        .tabs { 
+            display: flex; 
+            justify-content: space-around; 
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tab-btn { 
+            padding: 12px; 
+            cursor: pointer; 
+            border: none; 
+            background: none; 
+            color: var(--main-gold);
+            font-weight: bold; 
+            font-size: 14px;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+        
+        .tab-btn.active { 
+            border-bottom: 3px solid var(--main-gold);
+            opacity: 1;
+        }
+
+        .calc-mode { display: none; }
+        .calc-mode.active { display: block; }
+
+        .form-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--main-gold); font-size: 14px; }
+        
+        input { 
+            width: 100%; 
+            padding: 15px; 
+            background: #1a1a1a;
+            border: 1px solid #444; 
+            border-radius: 10px; 
+            font-size: 18px; 
+            color: var(--text-gold);
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--main-gold); }
+
+        .result-box { 
+            background: linear-gradient(145deg, #1a1a1a, #000);
+            padding: 25px; 
+            border-radius: 15px; 
+            border: 1px solid var(--main-gold);
+            margin-top: 20px;
+            box-shadow: inset 0 0 10px rgba(209, 177, 108, 0.1);
+        }
+        
+        .result-header { font-size: 12px; color: var(--main-gold); text-transform: uppercase; letter-spacing: 1px; }
+        .result-value { font-size: 32px; font-weight: bold; color: var(--text-gold); margin-top: 10px; }
+
+        .rate-info {
+            font-size: 11px;
+            color: #666;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <div class="header">
+        <h1 class="mr-boss-text">MR BOSS OFFICIAL</h1>
+        <div style="color: var(--main-gold); font-size: 12px; letter-spacing: 3px; margin-top: 5px;">PREMIUM CALCULATOR</div>
+    </div>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="setTab('buy-mode')">BUY MODE</button>
+            <button class="tab-btn" onclick="setTab('sell-mode')">SELL MODE</button>
+            <button class="tab-btn" onclick="setTab('vip-mode')">VIP LEVELS</button>
+        </div>
+
+        <div id="buy-mode" class="calc-mode active">
+            <div class="form-group">
+                <label>ENTER AMOUNT (PKR):</label>
+                <input type="number" id="pkrBuyInput" placeholder="Enter PKR" oninput="calculateBuy()">
+            </div>
+            <div class="result-box">
+                <div class="result-header">COINS YOU RECEIVE</div>
+                <div class="result-value" id="buyCoinsResult">0</div>
+                <div class="rate-info">Rate: 333 PKR = 1,000,000 Coins</div>
+            </div>
+        </div>
+
+        <div id="sell-mode" class="calc-mode">
+            <div class="form-group">
+                <label>ENTER SELL AMOUNT (PKR):</label>
+                <input type="number" id="pkrSellInput" placeholder="Enter PKR" oninput="calculateSell()">
+            </div>
+            <div class="result-box">
+                <div class="result-header">COINS TO GIVE</div>
+                <div class="result-value" id="sellCoinsResult">0</div>
+                <div class="rate-info">Rate: 1120 PKR = 3,000,000 Coins</div>
+            </div>
+        </div>
+
+        <div id="vip-mode" class="calc-mode">
+            <div class="form-group">
+                <label>SELECT SVIP LEVEL:</label>
+                <select id="vipLevelSelect" style="width: 100%; padding: 15px; background: #1a1a1a; border: 1px solid #444; border-radius: 10px; color: var(--text-gold); font-size: 16px;" onchange="calculateVip()">
+                    <option value="" disabled selected>Select Level</option>
+                    <option value="2240">SVIP 1</option>
+                    <option value="6670">SVIP 2</option>
+                    <option value="21770">SVIP 3</option>
+                    <option value="54425">SVIP 4</option>
+                    <option value="108850">SVIP 5</option>
+                    <option value="217700">SVIP 6</option>
+                    <option value="370000">SVIP 7</option>
+                    <option value="587790">SVIP 8</option>
+                    <option value="979650">SVIP 9</option>
+                </select>
+            </div>
+            <div class="result-box">
+                <div class="result-header">PRICE IN PKR</div>
+                <div class="result-value" id="vipPkrResult">0</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function setTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.calc-mode').forEach(calc => calc.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    function calculateBuy() {
+        let pkr = document.getElementById('pkrBuyInput').value;
+        const ratePerPkr = 1000000 / 333; // Buy Rate
+        if (pkr > 0) {
+            let totalCoins = pkr * ratePerPkr;
+            document.getElementById('buyCoinsResult').innerText = Math.floor(totalCoins).toLocaleString();
+        } else {
+            document.getElementById('buyCoinsResult').innerText = "0";
+        }
+    }
+
+    function calculateSell() {
+        let pkr = document.getElementById('pkrSellInput').value;
+        // Sell Rate based on 1120 PKR = 3,000,000 Coins
+        const ratePerPkr = 3000000 / 1120; 
+        if (pkr > 0) {
+            let totalCoins = pkr * ratePerPkr;
+            document.getElementById('sellCoinsResult').innerText = Math.floor(totalCoins).toLocaleString();
+        } else {
+            document.getElementById('sellCoinsResult').innerText = "0";
+        }
+    }
+
+    function calculateVip() {
+        let selectedPrice = document.getElementById('vipLevelSelect').value;
+        if (selectedPrice) {
+            document.getElementById('vipPkrResult').innerText = Number(selectedPrice).toLocaleString();
+        }
+    }
+</script>
+
+</body>
+</html>
+
